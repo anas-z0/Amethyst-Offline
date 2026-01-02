@@ -87,6 +87,12 @@ jobs:
       - name: Build for ${{ matrix.platform_name }}
         run: |
           cd Amethyst-iOS
+          FILE_PATH="Natives/JavaLauncher.m"
+          sed -i '' '1i\
+          #include <mach/mach.h>\
+          #include <mach/task.h>\
+          #include <mach/thread_state.h>' "$FILE_PATH"
+
           export PATH=/opt/homebrew/bin:$PATH
           export SLIMMED=1
           if [ "${{ matrix.platform_name }}" == "ios" ]; then
